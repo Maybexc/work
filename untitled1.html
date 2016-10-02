@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>下拉菜单</title>
+</head>
+<body>
+<script language="javascript">
+cityareaname=new Array(1);
+cityareacode=new Array(1);
+function first(preP,preC,formname,selectP,selectC,selectQ)
+{
+  a=0;
+
+if (selectP=='01')
+ { 
+ 	a=1;tempoption=new Option('广东','01',false,true); 
+ }
+else
+ {
+	 tempoption=new Option('广东','01'); 
+ }
+eval('document.'+formname+'.'+preP+'.options[1]=tempoption;');
+cityareacode[0]=new Array('0101','0102');
+cityareaname[0]=new Array('广州','珠海');
+
+eval('document.'+formname+'.'+preP+'.options[a].selected=true;');
+cityid=selectP;
+ if (cityid!='0')
+  {
+  b=0;for (i=0;i<cityareaname[cityid-1].length;i++)
+   {
+    if (selectC==cityareacode[cityid-1][i])
+    {b=i+1;tempoption=new Option(cityareaname[cityid-1][i],cityareacode[cityid-1][i],false,true);}
+    else
+    tempoption=new Option(cityareaname[cityid-1][i],cityareacode[cityid-1][i]);
+   eval('document.'+formname+'.'+preC+'.options[i+1]=tempoption;');
+   }
+  eval('document.'+formname+'.'+preC+'.options[b].selected=true;');
+  }
+}
+function selectcityarea(preP,preC,formname)
+{
+  cityid=eval('document.'+formname+'.'+preP+'.selectedIndex;');
+  j=eval('document.'+formname+'.'+preC+'.length;');
+  for (i=1;i<j;i++)
+  {eval('document.'+formname+'.'+preC+'.options[j-i]=null;')}
+  if (cityid!="0")
+  {
+   for (i=0;i<cityareaname[cityid-1].length;i++)
+   {
+    tempoption=new Option(cityareaname[cityid-1][i],cityareacode[cityid-1][i]);
+    eval('document.'+formname+'.'+preC+'.options[i+1]=tempoption;');
+   }
+  }
+}
+</script>
+<form action="" method=post name=form1>
+ <img src="images/w_KT.gif" height="6" width="1"><br>
+ <table width=300 border=0 cellspacing="0" cellpadding="1" !bgcolor=#FFFDE6>
+ <tr> 
+  <td class="black_con9" align="right">省份：</td>
+  <td class="black_con9"> 
+  <select name="selectp" onChange="selectcityarea('selectp','selectc','form1');">
+   <option value="0" selected>
+  </select>
+  </td>
+ </tr>
+ <tr> 
+  <td class="black_con9" align="right">市：</td>
+  <td class="black_con9"> 
+  <select name="selectc">
+   <option value="0" selected>
+  </select>
+  </td>
+ </tr>
+ <tr> 
+  <td class="black_con9" align="right">区：</td>
+  <td class="black_con9"> 
+  <select name="selectQ">
+   <option value="0" selected>
+  </select>
+  </td>
+ </tr>
+ </table>
+ </form>
+<script language="javascript">
+first("selectp","selectc","form1",0,0);
+</script>
+</body>
+</html>
