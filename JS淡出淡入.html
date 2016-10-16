@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>淡入淡出</title>
+<style>
+* {margin:0; padding:0}
+
+a {color:#999; text-decoration:none}
+
+#main {
+	width:500px;
+ 	margin:75px auto
+	}
+#buttons {
+	height:35px
+	}
+.button {
+	  padding:4px 0 5px;
+	   width:245px;
+	    text-align:center;
+		
+	}
+.button:hover {
+	border:1px solid #fff;
+	 background:#d9d9d9;
+	  color:#333
+	  }
+.floatright {float:right}
+#fade {
+	opacity:0;
+	 filter:alpha(opacity='0') border-radius:3px;
+	    padding:9px 10px 0;
+		 height:26px;
+			 }
+</style>
+<script type="text/javascript">
+var fade=function(){
+ return{
+  init:function(num, flag, target){
+   this.elem = document.getElementById(num);
+   clearInterval(this.elem.si);
+   this.target = target ? target : flag ? 100 : 0;
+   this.flag = flag || -1;
+   this.alpha = this.elem.style.opacity ? parseFloat(this.elem.style.opacity) * 100 : 0;
+   this.si = setInterval(function(){fade.tween()}, 20);
+  },
+  tween:function()
+  {
+   if(this.alpha == this.target){
+    clearInterval(this.si);
+   }else{
+    var value = Math.round(this.alpha + ((this.target - this.alpha) * .05)) + (1 * this.flag);
+    this.elem.style.opacity = value / 100;
+    this.elem.style.filter = 'alpha(opacity=' + value + ')';
+    this.alpha = value
+   }
+  }
+ }
+}();
+</script>
+</head>
+<body>
+<div id="main">
+<div id="fade">JavaScript</div>
+<div id="buttons">
+ <div class="button" onclick="fade.init('fade', 1)">淡入</div>
+ <div class="button floatright" onclick="fade.init('fade', 0)">淡出</div>
+
+</body>
+</html>
